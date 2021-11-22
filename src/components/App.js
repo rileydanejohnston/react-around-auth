@@ -5,6 +5,13 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
+import {
+  Switch,
+  Route
+} from "react-router-dom";
+import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
+import Register from './Register';
 
 function App() {
 
@@ -66,14 +73,24 @@ function App() {
     <div className='root'>
       <div className='page'>
         <Header />
-        <Main 
-          onEditProfileClick={handleEditProfileClick} 
-          onAddPlaceClick={handleAddPlaceClick} 
-          onEditAvatarClick={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          user={user}
-          cards={cards}
-        />
+        <Switch>
+        <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path='/register'>
+            <Register />
+          </Route>
+          <ProtectedRoute exact path='/' loggedIn={false}>
+            <Main 
+              onEditProfileClick={handleEditProfileClick} 
+              onAddPlaceClick={handleAddPlaceClick} 
+              onEditAvatarClick={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              user={user}
+              cards={cards}
+            />
+          </ProtectedRoute>
+        </Switch>
         <Footer />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <PopupWithForm title='Are you sure?' name='confirm' />
