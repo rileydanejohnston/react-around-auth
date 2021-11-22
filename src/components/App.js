@@ -21,6 +21,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
   const [user, setUser] = React.useState({ name: '', about: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -80,7 +81,7 @@ function App() {
           <Route path='/register'>
             <Register />
           </Route>
-          <ProtectedRoute exact path='/' loggedIn={false}>
+          <ProtectedRoute exact path='/' loggedIn={loggedIn}>
             <Main 
               onEditProfileClick={handleEditProfileClick} 
               onAddPlaceClick={handleAddPlaceClick} 
