@@ -1,0 +1,9 @@
+.popup__tool-tip {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 29px;
+  text-align: center;
+  color: #000;
+  margin: 32px 0 0 0;
+}

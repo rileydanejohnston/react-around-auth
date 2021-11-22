@@ -12,6 +12,7 @@ import {
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
+import InfoToolTip from './InfoToolTip';
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
   const [user, setUser] = React.useState({ name: '', about: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
+  const [registerStatus, setRegisterStatus] = React.useState(false);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -68,6 +71,11 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
+    setIsToolTipOpen(false);
+  }
+
+  function openToolTip() {
+    setIsToolTipOpen(true);
   }
 
   return (
@@ -110,6 +118,7 @@ function App() {
         <input className='popup__about popup__input' id='newPlace-about' type='url' placeholder='Image link' name='link' required />
         <span className='popup__error' id='newPlace-about-error' />
       </PopupWithForm>
+      <InfoToolTip isOpen={isToolTipOpen} onClose={closeAllPopups} registerStatus={registerStatus} />
       <div className='popup' id='confirmPopup'>
         <div className='popup__container'>
           <button className='popup__close' type='button' />

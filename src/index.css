@@ -43,14 +43,17 @@
 
 @import url('./blocks/popup/popup.css');
 @import url('./blocks/popup/__container/popup__container.css');
+@import url('./blocks/popup/__container/_register/popup__container_register.css');
 @import url('./blocks/popup/__form/popup__form.css');
 @import url('./blocks/popup/__title/popup__title.css');
 @import url('./blocks/popup/__title/_confirm/popup__title_confirm.css');
 @import url('./blocks/popup/__name/popup__name.css');
+@import url('./blocks/popup/__register-img/popup__register-img.css');
 @import url('./blocks/popup/__about/popup__about.css');
 @import url('./blocks/popup/__about/_profile-pic/popup__about_profile-pic.css');
 @import url('./blocks/popup/__input/popup__input.css');
 @import url('./blocks/popup/__submit/popup__submit.css');
+@import url('./blocks/popup/__tool-tip/popup__tool-tip.css');
 @import url('./blocks/popup/__submit/_confirm/popup__submit_confirm.css');
 @import url('./blocks/popup/__submit/_profile-pic/popup__submit_profile-pic.css');
 @import url('./blocks/popup/__close/popup__close.css');
