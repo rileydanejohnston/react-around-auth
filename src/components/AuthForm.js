@@ -12,13 +12,13 @@ export default function AuthForm({ text }) {
   }
 
   return (
-    <div className='login' onSubmit={handleSubmit}>
-      <h3 className='login__title'>{text.title}</h3>
-      <form className='login__form' method='POST' name={text.formName}>
-        <input className='login__input' onChange={(e) => setEmail(e.target.value)} placeholder='Email' type='email' name='email' required/>
-        <input className='login__input' onChange={(e) => setPassword(e.target.value)} placeholder='Password' type='password' name='password' required />
-        <button className='login__submit' type='submit'>{text.title}</button>
-        <p className='login__redirect'>{text.redirect} <a className='login__link' href='/'>here!</a>
+    <div className='auth' onSubmit={handleSubmit}>
+      <h3 className='auth__title'>{text.title}</h3>
+      <form className='auth__form' method='POST' name={text.formName}>
+        <input className='auth__input' onChange={(e) => setEmail(e.target.value)} placeholder='Email' type='email' name='email' required/>
+        <input className='auth__input' onChange={(e) => setPassword(e.target.value)} placeholder='Password' type='password' name='password' required />
+        <button className='auth__submit' type='submit'>{text.title}</button>
+        <p className='auth__redirect'>{text.redirect} <a className='auth__link' href='/'>here!</a>
         </p>
       </form>
     </div>
