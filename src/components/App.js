@@ -22,7 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
   const [user, setUser] = React.useState({ name: '', about: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
   const [registerStatus, setRegisterStatus] = React.useState(false);
 
@@ -80,9 +80,9 @@ function App() {
 
   return (
     <div className='root'>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <Switch>
-      <Route path='/login'>
+        <Route path='/login'>
           <Login />
         </Route>
         <Route path='/register'>
