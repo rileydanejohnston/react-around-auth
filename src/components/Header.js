@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router'
 
-export default function Header({ loggedIn }) {
+export default function Header({ loggedIn, userEmail }) {
   let location = useLocation();
 
   return (
@@ -15,7 +15,7 @@ export default function Header({ loggedIn }) {
       {
         (loggedIn && location.pathname === '/') && 
         <div className='header__logged-in'>
-          <p className='header__email'>email@email.com</p>
+          <p className='header__email'>{userEmail}</p>
           <a className='header__link header__link_log-out' href='/login'>Log out</a>
         </div>
       }

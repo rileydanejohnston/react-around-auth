@@ -28,6 +28,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
   const [registerStatus, setRegisterStatus] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -108,12 +109,24 @@ function App() {
     });
   }
 
+  function handleSignin(email, password) {
+    auth.signin(email, password)
+    .then((res) => {
+      if (res.token){
+        localStorage.setItem('jwt', res.token);
+        setLoggedIn(true);
+        setUserEmail(email);
+        history.push('/');
+      }
+    });
+  }
+
   return (
     <div className='root'>
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={loggedIn} userEmail={userEmail} />
       <Switch>
         <Route path='/login'>
-          <Login />
+          <Login onSignIn={handleSignin} />
         </Route>
         <Route path='/register'>
           <Register onRegister={handleRegister} />
