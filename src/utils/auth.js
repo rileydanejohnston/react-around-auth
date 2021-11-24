@@ -21,6 +21,7 @@ export const signin = (email, password) => {
   })
   .then((res) => {
     if (res.ok){
+      localStorage.setItem('email', email);
       return res.json();
     }
   })

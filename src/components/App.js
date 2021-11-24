@@ -123,6 +123,7 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('email');
     setLoggedIn(false);
     setUserEmail('');
   }
@@ -130,9 +131,11 @@ function App() {
   React.useEffect(() => {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
+      const email = localStorage.getItem('email');
       auth.authorize(jwt)
       .then((res) => {
         setLoggedIn(true);
+        setUserEmail(email);
         history.push('/');
       })
     }
