@@ -127,6 +127,17 @@ function App() {
     setUserEmail('');
   }
 
+  React.useEffect(() => {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      auth.authorize(jwt)
+      .then((res) => {
+        setLoggedIn(true);
+        history.push('/');
+      })
+    }
+  }, []);
+
   return (
     <div className='root'>
       <Header loggedIn={loggedIn} userEmail={userEmail} logout={handleLogout} />

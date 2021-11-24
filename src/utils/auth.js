@@ -28,3 +28,22 @@ export const signin = (email, password) => {
     console.log(err);
   });
 }
+
+export const authorize = (token) => {
+  return fetch('https://register.nomoreparties.co/users/me', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then((res) => {
+    return res;
+  })
+  .catch((err) => console.log(err));
+}

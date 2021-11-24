@@ -9,8 +9,6 @@ export default function AuthForm({ text, onSubmit }) {
     e.preventDefault();
 
     onSubmit(email, password);
-    // console.log(`Email: ${email}`);
-    // console.log(`Password: ${password}`);
   }
 
   return (
