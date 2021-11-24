@@ -11,7 +11,7 @@ export default function Header({ loggedIn, userEmail, logout }) {
         (location.pathname === '/login') && <a className='header__text header__text_link' href='/register'>Sign up</a>
       }
       {
-        (location.pathname === '/register') && <a className='header__text header__text_link' href='/login'>Sign in</a>}
+        (location.pathname === '/register') && <a className='header__text header__text_link' href='/login'>Log in</a>}
       {
         (loggedIn && location.pathname === '/') && 
         <div className='header__logged-in'>
