@@ -1,3 +1,9 @@
 .header__text_log-out {
   color: #A9A9A9;
 }
+@media screen and (max-width: 480px){
+  .header__text {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

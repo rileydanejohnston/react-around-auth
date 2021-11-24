@@ -11,6 +11,12 @@
 @import url('./blocks/header/__text/_link/header__text_link.css');
 @import url('./blocks/header/__text/_log-out/header__text_log-out.css');
 @import url('./blocks/header/__logged-in/header__logged-in.css');
+@import url('./blocks/header/__logged-in/_active/header__logged-in_active.css');
+
+@import url('./blocks/header/__menu-wrapper.css/header__menu-wrapper.css');
+@import url('./blocks/header/__button/header__button.css');
+@import url('./blocks/header/__button/_close/header__button_close.css');
+@import url('./blocks/header//__button/_menu/header__button_menu.css');
 
 @import url('./blocks/auth/auth.css');
 @import url('./blocks/auth/__title/auth__title.css');
