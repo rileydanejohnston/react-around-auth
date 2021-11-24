@@ -10,6 +10,7 @@
 @import url('./blocks/header/__text/_email/header__text_email.css');
 @import url('./blocks/header/__text/_link/header__text_link.css');
 @import url('./blocks/header/__text/_log-out/header__text_log-out.css');
+@import url('./blocks/header/__text/_auth/header__text_auth.css');
 @import url('./blocks/header/__logged-in/header__logged-in.css');
 @import url('./blocks/header/__logged-in/_active/header__logged-in_active.css');
 

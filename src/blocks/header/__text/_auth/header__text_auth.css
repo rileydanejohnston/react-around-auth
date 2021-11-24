@@ -1,0 +1,6 @@
+@media screen and (max-width: 480px){
+  .header__text_auth {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
