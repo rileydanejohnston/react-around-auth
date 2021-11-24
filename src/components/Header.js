@@ -7,7 +7,7 @@ export default function Header({ loggedIn, userEmail, logout }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   {/* so sorry about this unholy frankenstein of modifiers */}
-  
+
   return (
     <header className={loggedIn ? 'header header_logged-in' : 'header'}>
       <header className='header__menu-wrapper'>
@@ -21,7 +21,7 @@ export default function Header({ loggedIn, userEmail, logout }) {
         (location.pathname === '/register') && <a className='header__text header__text_link header__text_auth' href='/login'>Log in</a>}
       {
         (loggedIn && location.pathname === '/') && 
-        <div className={menuOpen ? 'header__logged-in header__logged-in_active' : 'header__logged-in'}>
+        <div className={menuOpen ? 'header__nav header__nav_active' : 'header__nav'}>
           <p className='header__text header__text_email'>{userEmail}</p>
           <a className='header__text header__text_link header__text_log-out' onClick={logout} href='/login'>Log out</a>
         </div>

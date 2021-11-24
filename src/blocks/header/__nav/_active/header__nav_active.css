@@ -1,5 +1,5 @@
 @media screen and (max-width: 625px){
-  .header__logged-in_active {
+  .header__nav_active {
     visibility: visible;
     opacity: 1;
     max-height: 200px;
