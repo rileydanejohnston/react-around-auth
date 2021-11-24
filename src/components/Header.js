@@ -6,8 +6,10 @@ export default function Header({ loggedIn, userEmail, logout }) {
 
   const [menuOpen, setMenuOpen] = React.useState(false);
 
+  {/* so sorry about this unholy frankenstein of modifiers */}
+  
   return (
-    <header className='header'>
+    <header className={loggedIn ? 'header header_logged-in' : 'header'}>
       <header className='header__menu-wrapper'>
         <div className='logo'/>
         {loggedIn && <button className={menuOpen ? `header__button header__button_close` : `header__button header__button_menu`} onClick={() => setMenuOpen(!menuOpen)}/>}
