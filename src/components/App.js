@@ -25,7 +25,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
   const [user, setUser] = React.useState({ name: '', about: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
   const [registerStatus, setRegisterStatus] = React.useState(false);
 
@@ -74,12 +74,20 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
-    setIsToolTipOpen(false);
-    setRegisterStatus(false);
   }
 
   function openToolTip() {
     setIsToolTipOpen(true);
+  }
+
+  function closeToolTip() {
+    const tempStatus = registerStatus;
+    setIsToolTipOpen(false);
+    setRegisterStatus(false);
+
+    if (tempStatus){
+      history.push('/login');
+    }
   }
 
 
@@ -94,7 +102,6 @@ function App() {
     .then((res) => {
       console.log(res);
       openToolTip();
-      history.push('/login');
     })
     .catch((err) => {
       return err;
@@ -141,7 +148,7 @@ function App() {
         <input className='popup__about popup__input' id='newPlace-about' type='url' placeholder='Image link' name='link' required />
         <span className='popup__error' id='newPlace-about-error' />
       </PopupWithForm>
-      <InfoToolTip isOpen={isToolTipOpen} onClose={closeAllPopups} registerStatus={registerStatus} />
+      <InfoToolTip isOpen={isToolTipOpen} onClose={closeToolTip} registerStatus={registerStatus} />
       <div className='popup' id='confirmPopup'>
         <div className='popup__container'>
           <button className='popup__close' type='button' />
