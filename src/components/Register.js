@@ -1,7 +1,7 @@
 import React from 'react'
 import AuthForm from './AuthForm';
 
-export default function Login() {
+export default function Register({ onRegister }) {
 
   const registerText = {
     title: 'Sign up',
@@ -10,6 +10,6 @@ export default function Login() {
   }
 
   return (
-    <AuthForm text={registerText} />
+    <AuthForm text={registerText} onSubmit={onRegister} />
   )
 }

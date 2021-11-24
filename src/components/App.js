@@ -7,14 +7,17 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import {
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
 import InfoToolTip from './InfoToolTip';
+import * as auth from '../utils/auth';
 
 function App() {
+  const history = useHistory();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -72,10 +75,30 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
     setIsToolTipOpen(false);
+    setRegisterStatus(false);
   }
 
   function openToolTip() {
     setIsToolTipOpen(true);
+  }
+
+
+  function handleRegister(email, password) {
+    auth.signup(email, password)
+    .then((res) => {
+      if (res.status === 201) {
+        setRegisterStatus(true);
+        return res.json();
+      }
+    })
+    .then((res) => {
+      console.log(res);
+      openToolTip();
+      history.push('/login');
+    })
+    .catch((err) => {
+      return err;
+    });
   }
 
   return (
@@ -86,7 +109,7 @@ function App() {
           <Login />
         </Route>
         <Route path='/register'>
-          <Register />
+          <Register onRegister={handleRegister} />
         </Route>
         <ProtectedRoute exact path='/' loggedIn={loggedIn}>
           <Main 

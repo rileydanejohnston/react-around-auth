@@ -1,14 +1,16 @@
 import React from 'react'
 
-export default function AuthForm({ text }) {
+export default function AuthForm({ text, onSubmit }) {
 
   const [email,setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
+
+    onSubmit(email, password);
+    // console.log(`Email: ${email}`);
+    // console.log(`Password: ${password}`);
   }
 
   return (
