@@ -5,5 +5,6 @@
 @media screen and (max-width: 625px){
   .header__menu-wrapper {
     order: 1;
+    padding-top: 28px;
   }
 }

@@ -4,6 +4,7 @@
 @media screen and (max-width: 625px){
   .header__logged-in {
     flex-direction: column;
+    transition: opacity .5s ease, max-height .5s ease;
     align-items: center;
     visibility: hidden;
     opacity: 0;

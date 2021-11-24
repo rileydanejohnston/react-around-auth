@@ -4,6 +4,6 @@
 }
 @media screen and (max-width: 625px){
   .header__text_email {
-    margin-bottom: 18px;
+    margin: 28px 0 18px 0;
   }
 }

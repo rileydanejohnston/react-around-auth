@@ -2,10 +2,7 @@
   .header__logged-in_active {
     visibility: visible;
     opacity: 1;
-    max-height: 114px;
+    max-height: 200px;
     border-bottom: 1px solid rgba(84, 84, 84, .7);
-    transition: opacity .5s ease, max-height .5s ease;
-    padding-bottom: 40px;
-    margin-bottom: 27px;
   }
 }
