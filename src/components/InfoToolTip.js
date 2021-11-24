@@ -10,7 +10,7 @@ export default function InfoToolTip({ isOpen, onClose, registerStatus }) {
   return (
     <div className={isOpen ? `popup popup_active`: `popup`}>
       <div className='popup__container popup__container_register'>
-        <button className='popup__close' type='button' onClick={onClose}></button>
+        <button className='popup__close popup__close_type_tool-tip' type='button' onClick={onClose}></button>
         <img className='popup__register-img' src={registerStatus ? `${successImg}` : `${failImg}`} alt='Register outcome symbol' />
         <p className='popup__tool-tip'>{registerStatus ? successText : failText}</p>
       </div>

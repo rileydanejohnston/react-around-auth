@@ -7,3 +7,10 @@
   color: #000;
   margin: 32px 0 0 0;
 }
+@media screen and(max-width: 625px) {
+  .popup__tool-tip {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 40px 0 0 0;
+  }
+}
