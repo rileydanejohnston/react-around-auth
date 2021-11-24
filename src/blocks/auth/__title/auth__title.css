@@ -9,3 +9,10 @@
   font-weight: 900;
   line-height: 29px;
 }
+@media screen and (max-width: 625px){
+  .auth__title {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0 0 40px 0;
+  }
+}
