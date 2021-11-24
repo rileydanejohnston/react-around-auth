@@ -7,14 +7,17 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import {
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
 import InfoToolTip from './InfoToolTip';
+import * as auth from '../utils/auth';
 
 function App() {
+  const history = useHistory();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -25,6 +28,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
   const [registerStatus, setRegisterStatus] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -71,22 +75,81 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
-    setIsToolTipOpen(false);
   }
 
   function openToolTip() {
     setIsToolTipOpen(true);
   }
 
+  function closeToolTip() {
+    const tempStatus = registerStatus;
+    setIsToolTipOpen(false);
+    setRegisterStatus(false);
+
+    if (tempStatus){
+      history.push('/login');
+    }
+  }
+
+
+  function handleRegister(email, password) {
+    auth.signup(email, password)
+    .then((res) => {
+      if (res.status === 201) {
+        setRegisterStatus(true);
+        return res.json();
+      }
+    })
+    .then((res) => {
+      console.log(res);
+      openToolTip();
+    })
+    .catch((err) => {
+      return err;
+    });
+  }
+
+  function handleSignin(email, password) {
+    auth.signin(email, password)
+    .then((res) => {
+      if (res.token){
+        localStorage.setItem('jwt', res.token);
+        setLoggedIn(true);
+        setUserEmail(email);
+        history.push('/');
+      }
+    });
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('email');
+    setLoggedIn(false);
+    setUserEmail('');
+  }
+
+  React.useEffect(() => {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      const email = localStorage.getItem('email');
+      auth.authorize(jwt)
+      .then((res) => {
+        setLoggedIn(true);
+        setUserEmail(email);
+        history.push('/');
+      })
+    }
+  }, []);
+
   return (
     <div className='root'>
-      <Header />
+      <Header loggedIn={loggedIn} userEmail={userEmail} logout={handleLogout} />
       <Switch>
-      <Route path='/login'>
-          <Login />
+        <Route path='/login'>
+          <Login onSignIn={handleSignin} />
         </Route>
         <Route path='/register'>
-          <Register />
+          <Register onRegister={handleRegister} />
         </Route>
         <ProtectedRoute exact path='/' loggedIn={loggedIn}>
           <Main 
@@ -118,7 +181,7 @@ function App() {
         <input className='popup__about popup__input' id='newPlace-about' type='url' placeholder='Image link' name='link' required />
         <span className='popup__error' id='newPlace-about-error' />
       </PopupWithForm>
-      <InfoToolTip isOpen={isToolTipOpen} onClose={closeAllPopups} registerStatus={registerStatus} />
+      <InfoToolTip isOpen={isToolTipOpen} onClose={closeToolTip} registerStatus={registerStatus} />
       <div className='popup' id='confirmPopup'>
         <div className='popup__container'>
           <button className='popup__close' type='button' />
