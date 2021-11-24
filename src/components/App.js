@@ -121,9 +121,15 @@ function App() {
     });
   }
 
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setUserEmail('');
+  }
+
   return (
     <div className='root'>
-      <Header loggedIn={loggedIn} userEmail={userEmail} />
+      <Header loggedIn={loggedIn} userEmail={userEmail} logout={handleLogout} />
       <Switch>
         <Route path='/login'>
           <Login onSignIn={handleSignin} />
