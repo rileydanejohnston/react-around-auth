@@ -171,10 +171,11 @@ function App() {
     auth.signup(email, password)
     .then((res) => {
       setRegisterStatus(true);
-      openToolTip();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
       openToolTip();
     });
     
