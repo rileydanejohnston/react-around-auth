@@ -1,5 +1,7 @@
+const baseUrl = 'https://register.nomoreparties.co';
+
 export const signup = (email, password) => {
-  return fetch('https://register.nomoreparties.co/signup', {
+  return fetch(`${baseUrl}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,7 +14,7 @@ export const signup = (email, password) => {
 }
 
 export const signin = (email, password) => {
-  return fetch('https://register.nomoreparties.co/signin', {
+  return fetch(`${baseUrl}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -31,7 +33,7 @@ export const signin = (email, password) => {
 }
 
 export const authorize = (token) => {
-  return fetch('https://register.nomoreparties.co/users/me', {
+  return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
