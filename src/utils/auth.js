@@ -1,5 +1,12 @@
 const baseUrl = 'https://register.nomoreparties.co';
 
+const handleResponse = (res) => {
+  if (res.ok){
+    return res.json();
+  }
+  return Promise.reject();
+}
+
 export const signup = (email, password) => {
   return fetch(`${baseUrl}/signup`, {
     method: 'POST',
@@ -9,7 +16,7 @@ export const signup = (email, password) => {
     body: JSON.stringify({ password, email })
   })
   .then((res) => {
-    return res;
+    return handleResponse(res);
   });
 }
 

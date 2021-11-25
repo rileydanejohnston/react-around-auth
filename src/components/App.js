@@ -170,18 +170,14 @@ function App() {
   function handleRegister(email, password) {
     auth.signup(email, password)
     .then((res) => {
-      if (res.status === 201) {
-        setRegisterStatus(true);
-        return res.json();
-      }
-    })
-    .then((res) => {
-      console.log(res);
+      setRegisterStatus(true);
       openToolTip();
     })
     .catch((err) => {
-      return err;
+      console.log(err);
+      openToolTip();
     });
+    
   }
 
   function handleSignin(email, password) {
