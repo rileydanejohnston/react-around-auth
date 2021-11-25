@@ -29,13 +29,7 @@ export const signin = (email, password) => {
     body: JSON.stringify({ password, email })
   })
   .then((res) => {
-    if (res.ok){
-      localStorage.setItem('email', email);
-      return res.json();
-    }
-  })
-  .catch((err) => {
-    console.log(err);
+    return handleResponse(res);
   });
 }
 
@@ -48,12 +42,6 @@ export const authorize = (token) => {
     }
   })
   .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
+    return handleResponse(res);
   })
-  .then((res) => {
-    return res;
-  })
-  .catch((err) => console.log(err));
 }

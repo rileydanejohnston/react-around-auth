@@ -185,11 +185,13 @@ function App() {
     .then((res) => {
       if (res.token){
         localStorage.setItem('jwt', res.token);
+        localStorage.setItem('email', email);
         setLoggedIn(true);
         setUserEmail(email);
         history.push('/');
       }
-    });
+    })
+    .catch((err) => console.log(err));
   }
 
   function handleLogout() {
@@ -209,6 +211,7 @@ function App() {
         setUserEmail(email);
         history.push('/');
       })
+      .catch((err) => console.log(err));
     }
   }, []);
 
