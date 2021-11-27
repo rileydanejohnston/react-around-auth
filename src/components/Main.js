@@ -26,7 +26,9 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
       <section className='locations'>
         <ul className='cards'>
           {cards.map((item) => {
-              return <Card key={`${item.cardId}`} card={item} onCardLike={onCardLike} onCardClick={onCardClick} onDeleteClick={onDeleteClick} />
+              return (
+              <Card key={`${item.cardId}`} card={item} onCardLike={onCardLike} onCardClick={onCardClick} onDeleteClick={onDeleteClick} />
+            )
           })}
         </ul>
       </section>
