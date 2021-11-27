@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PopupWithForm({ name, title, children, isOpen, onClose, onSubmit }) {
+export default function PopupWithForm({ name, title, children, isOpen, onClose, onSubmit, buttonText }) {
 
   // add hook for if user presses esc while popup is open?
 
@@ -11,7 +11,7 @@ export default function PopupWithForm({ name, title, children, isOpen, onClose, 
         <form className='popup__form' id={name} onSubmit={onSubmit} method='POST' name={name}>
           <h3 className='popup__title popup__title_confirm'>{title}</h3>
           {children}
-          <button className='popup__submit popup__submit_confirm' type='submit' name='submit'>Save</button>
+          <button className='popup__submit popup__submit_confirm' type='submit' name='submit'>{buttonText}</button>
         </form>
       </div>
     </div>

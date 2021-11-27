@@ -25,7 +25,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
   } 
 
   return (
-    <PopupWithForm title='New place' name='place' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} >
+    <PopupWithForm title='New place' name='place' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} buttonText='Create'>
       <input className='popup__name popup__input' onChange={handleNameChange} value={name} id='newPlace-name' type='text' placeholder='Title' name='title' minLength='1' maxLength='30' required />
       <span className='popup__error' id='newPlace-name-error' />
       <input className='popup__about popup__input' onChange={handleUrlChange} value={url} id='newPlace-about' type='url' placeholder='Image link' name='link' required />
