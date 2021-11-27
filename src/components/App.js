@@ -14,6 +14,7 @@ import {
   Route,
   useHistory
 } from "react-router-dom";
+import { useLocation } from 'react-router';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
@@ -22,6 +23,7 @@ import * as auth from '../utils/auth';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
