@@ -14,6 +14,7 @@ import {
   Route,
   useHistory
 } from "react-router-dom";
+import { useLocation } from 'react-router';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
@@ -22,6 +23,7 @@ import * as auth from '../utils/auth';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -57,14 +59,23 @@ function App() {
     const closeByEscape = (e) => {
       if (e.key === 'Escape') {
         closeAllPopups();
+        closeToolTip();
       }
     }
-
     document.addEventListener('keydown', closeByEscape);
-
     return () => document.removeEventListener('keydown', closeByEscape);
+  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen])
 
-  }, [])
+  React.useEffect(() => {
+    const handleOverlayClick = (e) => {
+      if (e.target.classList.contains('popup_active')) {
+        closeAllPopups();
+        closeToolTip();
+      }
+    }
+    document.addEventListener('click', handleOverlayClick);
+    return () => document.removeEventListener('click', handleOverlayClick);
+  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
