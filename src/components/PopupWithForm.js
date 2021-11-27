@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function PopupWithForm({ name, title, children, isOpen, onClose, onSubmit, buttonText }) {
 
-  // add hook for if user presses esc while popup is open?
-
   return (
     <div className={isOpen ? `popup popup_active popup_type_${name}`: `popup popup_type_${name}`}>
       <div className='popup__container'>

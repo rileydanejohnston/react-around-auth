@@ -7,8 +7,6 @@ export default function Header({ loggedIn, userEmail, logout }) {
 
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  {/* so sorry about this unholy frankenstein of modifiers */}
-
   return (
     <header className={loggedIn ? 'header header_logged-in' : 'header'}>
       <div className='header__menu-wrapper'>
