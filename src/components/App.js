@@ -35,6 +35,7 @@ function App() {
   const [registerStatus, setRegisterStatus] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const [deleteCard, setDeleteCard] = React.useState('');
+  const [isSaving, setIsSaving] = React.useState(false);
 
   React.useEffect(() => {
     if (localStorage.getItem('jwt')){
@@ -120,6 +121,7 @@ function App() {
   }
 
   function handleConfirmOpen(cardId) {
+    setIsSaving(false);
     setDeleteCard(cardId);
     setIsConfirmOpen(true);
   }
@@ -162,14 +164,17 @@ function App() {
   }
 
   function handleEditAvatarClick() {
+    setIsSaving(false);
     setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
+    setIsSaving(false);
     setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
+    setIsSaving(false);
     setIsAddPlacePopupOpen(true);
   }
 
@@ -268,22 +273,29 @@ function App() {
           onClose={closeAllPopups}
           title='Are you sure?'
           name='confirm'
-          buttonText='Yes'
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlaceSubmit={handleAddPlaceSubmit}
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
         />
         <InfoToolTip
           isOpen={isToolTipOpen}

@@ -1,10 +1,11 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm'
 
-export default function ConfirmPopup({ isOpen, onSubmit, onClose, title, name, buttonText }) {
+export default function ConfirmPopup({ isOpen, onSubmit, onClose, title, name, isSaving, setIsSaving }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSaving(true);
     onSubmit();
   }
 
@@ -15,7 +16,8 @@ export default function ConfirmPopup({ isOpen, onSubmit, onClose, title, name, b
       onClose={onClose}
       title={title}
       name={name}
-      buttonText={buttonText}
+      isSaving={isSaving}
+      buttonText='Yes'
     />
   )
 }
