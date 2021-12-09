@@ -2,7 +2,7 @@ import React from 'react'
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-function EditProfilePopup(props) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSaving, setIsSaving }) {
 
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -12,7 +12,7 @@ function EditProfilePopup(props) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser, props.isOpen]);
+  }, [currentUser, isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -24,8 +24,8 @@ function EditProfilePopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.setIsSaving(true);
-    props.onUpdateUser({
+    setIsSaving(true);
+    onUpdateUser({
       name,
       about: description
     });
@@ -37,9 +37,9 @@ function EditProfilePopup(props) {
       name='profile'
       buttonText='Save'
       onSubmit={handleSubmit}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      isSaving={props.isSaving}
+      isOpen={isOpen}
+      onClose={onClose}
+      isSaving={isSaving}
     >
       <input className='popup__name popup__input' onChange={handleNameChange} value={name} id='profile-name' type='text' placeholder='Name' name='name' minLength='2' maxLength='40' required />
       <span className='popup__error' id='profile-name-error' />
