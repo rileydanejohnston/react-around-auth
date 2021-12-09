@@ -113,10 +113,12 @@ function App() {
     .then((res) => {
       const newCards = cards.filter((prevCard) => { return prevCard.cardId !== deleteCard });
       setCards(newCards);
+    })  
+    .catch((err) => console.log(err))
+    .finally(() => {
       setDeleteCard('');
       closeAllPopups();
-    })  
-    .catch((err) => console.log(err));
+    });
     
   }
 
@@ -131,9 +133,11 @@ function App() {
     .then((res) => {
       const updateUser = {...currentUser, name: res.name, about: res.about };
       setCurrentUser(updateUser);
-      closeAllPopups();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      closeAllPopups();
+    });
   }
 
   function handleUpdateAvatar(formInput) {
@@ -141,9 +145,11 @@ function App() {
     .then((res) => {
       const updateUser = { ...currentUser, avatar: res.avatar };
       setCurrentUser(updateUser);
-      closeAllPopups();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      closeAllPopups();
+    });
   }
 
   function handleAddPlaceSubmit(name, url) {
@@ -158,9 +164,11 @@ function App() {
       };
 
       setCards([newCard, ...cards]);
-      closeAllPopups();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      closeAllPopups();
+    });
   }
 
   function handleEditAvatarClick() {
