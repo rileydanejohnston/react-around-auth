@@ -26,6 +26,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', avatar: '', _id: ''});
   const [cards, setCards] = React.useState([]);
@@ -150,6 +151,10 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleConfirmOpen() {
+    setIsConfirmOpen(true);
+  }
+
   function handleCardClick({ link, name }) {
     setSelectedCard({ link, name });
   }
@@ -159,6 +164,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
+    setIsConfirmOpen(false);
   }
 
   function openToolTip() {
@@ -244,13 +250,13 @@ function App() {
               onCardClick={handleCardClick}
               cards={cards}
               onCardLike={handleCardLike}
-              onDeleteClick={handleDeleteCard}
+              onDeleteClick={handleConfirmOpen}
             />
           </ProtectedRoute>
         </Switch>
         <Footer />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <PopupWithForm title='Are you sure?' name='confirm' />
+        <PopupWithForm title='Are you sure?' name='confirm' isOpen={isConfirmOpen} onSubmit={handleDeleteCard} onClose={closeAllPopups} buttonText='Yes' />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
