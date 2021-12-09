@@ -2,7 +2,6 @@ import React from 'react'
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
@@ -19,6 +18,7 @@ import Login from './Login';
 import Register from './Register';
 import InfoToolTip from './InfoToolTip';
 import * as auth from '../utils/auth';
+import ConfirmPopup from './ConfirmPopup';
 
 function App() {
   const history = useHistory();
@@ -26,6 +26,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', avatar: '', _id: ''});
   const [cards, setCards] = React.useState([]);
@@ -33,7 +34,22 @@ function App() {
   const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
   const [registerStatus, setRegisterStatus] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
+  const [deleteCard, setDeleteCard] = React.useState('');
 
+  React.useEffect(() => {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      const email = localStorage.getItem('email');
+      auth.authorize(jwt)
+      .then((res) => {
+        setLoggedIn(true);
+        setUserEmail(email);
+        history.push('/');
+      })
+      .catch((err) => console.log(err));
+    }
+  }, []);
+  
   React.useEffect(() => {
     api.getUserInfo()
     .then(({ name, about, avatar, _id }) => {
@@ -62,7 +78,7 @@ function App() {
     }
     document.addEventListener('keydown', closeByEscape);
     return () => document.removeEventListener('keydown', closeByEscape);
-  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen])
+  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, isConfirmOpen])
 
   React.useEffect(() => {
     const handleOverlayClick = (e) => {
@@ -73,7 +89,7 @@ function App() {
     }
     document.addEventListener('click', handleOverlayClick);
     return () => document.removeEventListener('click', handleOverlayClick);
-  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen])
+  }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, isConfirmOpen])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
@@ -91,14 +107,21 @@ function App() {
     .catch((err) => console.log(err));
   }
 
-  function handleDeleteCard(card) {
-
-    api.deleteCard(card.cardId)
+  function handleDeleteCard() {
+    api.deleteCard(deleteCard)
     .then((res) => {
-      const newCards = cards.filter((prevCard) => { return prevCard.cardId !== card.cardId });
+      const newCards = cards.filter((prevCard) => { return prevCard.cardId !== deleteCard });
       setCards(newCards);
+      setDeleteCard('');
+      closeAllPopups();
     })  
     .catch((err) => console.log(err));
+    
+  }
+
+  function handleConfirmOpen(cardId) {
+    setDeleteCard(cardId);
+    setIsConfirmOpen(true);
   }
 
   function handleUpdateUser(formInput) {
@@ -159,6 +182,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ link: '', name: '' });
+    setIsConfirmOpen(false);
   }
 
   function openToolTip() {
@@ -174,7 +198,6 @@ function App() {
       history.push('/login');
     }
   }
-
 
   function handleRegister(email, password) {
     auth.signup(email, password)
@@ -211,20 +234,6 @@ function App() {
     setUserEmail('');
   }
 
-  React.useEffect(() => {
-    if (localStorage.getItem('jwt')){
-      const jwt = localStorage.getItem('jwt');
-      const email = localStorage.getItem('email');
-      auth.authorize(jwt)
-      .then((res) => {
-        setLoggedIn(true);
-        setUserEmail(email);
-        history.push('/');
-      })
-      .catch((err) => console.log(err));
-    }
-  }, []);
-
   return (
     <div className='root'>
       <CurrentUserContext.Provider value={currentUser}>
@@ -244,17 +253,43 @@ function App() {
               onCardClick={handleCardClick}
               cards={cards}
               onCardLike={handleCardLike}
-              onDeleteClick={handleDeleteCard}
+              onDeleteClick={handleConfirmOpen}
             />
           </ProtectedRoute>
         </Switch>
         <Footer />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <PopupWithForm title='Are you sure?' name='confirm' />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
-        <InfoToolTip isOpen={isToolTipOpen} onClose={closeToolTip} registerStatus={registerStatus} />
+        <ImagePopup 
+          card={selectedCard} 
+          onClose={closeAllPopups}
+        />
+        <ConfirmPopup
+          isOpen={isConfirmOpen}
+          onSubmit={handleDeleteCard}
+          onClose={closeAllPopups}
+          title='Are you sure?'
+          name='confirm'
+          buttonText='Yes'
+        />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
+        <InfoToolTip
+          isOpen={isToolTipOpen}
+          onClose={closeToolTip}
+          registerStatus={registerStatus}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
