@@ -178,10 +178,6 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleConfirmOpen() {
-    setIsConfirmOpen(true);
-  }
-
   function handleCardClick({ link, name }) {
     setSelectedCard({ link, name });
   }
