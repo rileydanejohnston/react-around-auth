@@ -19,6 +19,7 @@ import Register from './Register';
 import InfoToolTip from './InfoToolTip';
 import * as auth from '../utils/auth';
 import ConfirmPopup from './ConfirmPopup';
+// import Api from '../utils/api';
 
 function App() {
   const history = useHistory();
@@ -36,10 +37,22 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const [deleteCard, setDeleteCard] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [userToken, setUserToken] = useState('');
+
+  /*
+  let authApi = new Api({
+    baseUrl: "http://localhost:3000",
+    headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json"
+      }
+  });
+  */
 
   useEffect(() => {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
+      setUserToken(jwt);
       const email = localStorage.getItem('email');
       auth.authorize(jwt)
       .then((res) => {
@@ -233,6 +246,7 @@ function App() {
         localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', email);
         setLoggedIn(true);
+        setUserToken(res.token);
         setUserEmail(email);
         history.push('/');
       }
@@ -245,6 +259,7 @@ function App() {
     localStorage.removeItem('email');
     setLoggedIn(false);
     setUserEmail('');
+    setUserToken('');
   }
 
   return (
