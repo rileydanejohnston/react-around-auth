@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -23,21 +23,21 @@ import ConfirmPopup from './ConfirmPopup';
 function App() {
   const history = useHistory();
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({ link: '', name: '' });
-  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', avatar: '', _id: ''});
-  const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isToolTipOpen, setIsToolTipOpen] = React.useState(false);
-  const [registerStatus, setRegisterStatus] = React.useState(false);
-  const [userEmail, setUserEmail] = React.useState('');
-  const [deleteCard, setDeleteCard] = React.useState('');
-  const [isSaving, setIsSaving] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({ link: '', name: '' });
+  const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '', _id: ''});
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isToolTipOpen, setIsToolTipOpen] = useState(false);
+  const [registerStatus, setRegisterStatus] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [deleteCard, setDeleteCard] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
       const email = localStorage.getItem('email');
@@ -51,7 +51,7 @@ function App() {
     }
   }, []);
   
-  React.useEffect(() => {
+  useEffect(() => {
     api.getUserInfo()
     .then(({ name, about, avatar, _id }) => {
       setCurrentUser({ name, about, avatar, _id });
@@ -59,7 +59,7 @@ function App() {
     .catch((err) => console.log(err));
   }, []);
  
-  React.useEffect(() => {
+  useEffect(() => {
     api.getCards()
     .then((res) => {
       const cardData = res.map((item) => {
@@ -70,7 +70,7 @@ function App() {
     .catch((err) => console.log(err));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const closeByEscape = (e) => {
       if (e.key === 'Escape') {
         closeAllPopups();
@@ -81,7 +81,7 @@ function App() {
     return () => document.removeEventListener('keydown', closeByEscape);
   }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, isConfirmOpen])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleOverlayClick = (e) => {
       if (e.target.classList.contains('popup_active')) {
         closeAllPopups();
